@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <title>Pesquise o CNPJ</title>
+    
+
+</head>
+<body>
+<div class="container">
+    <h1>Pesquise o CNPJ</h1>
+    <h2>(pesquise utilizando somente números)</h2>
+    <input name="pesquisaCNPJ" id="pesquisaCNPJ" type="text"/>
+    <br><br>
+    <input type="button" value="Buscar CNPJ" onclick="consultarCNPJ()"/>
+    <div id="dados"></div>
+  </div>
+    <script>
+        function consultarCNPJ() {
+  var cnpj = document.getElementById("pesquisaCNPJ").value;
+  fetch("https://cors-anywhere.herokuapp.com/https://receitaws.com.br/v1/cnpj/" + cnpj).then((response) => {
+     if(response.ok) {
+         return response.json();
+     }
+  }).then((dados) => {
+     console.log(dados)
+     document.getElementById("dados").innerHTML = `
+         Nome Empresarial: ${dados.nome} <br>
+         Endereço Eletrônico: ${dados.email}<br>
+         Logradouro: ${dados.logradouro}<br>
+         Municipio: ${dados.municipio}<br>
+         UF: ${dados.uf}<br>
+         Telefone: ${dados.telefone}<br>
+         Tipo: ${dados.tipo}<br>
+         Status: ${dados.status}<br>
+         Número: ${dados.numero}<br>
+         Natureza Juridica: ${dados.natureza_juridica}<br>
+         
+         
+     `
+  })
+ }
+    </script>
+</body>
+</html>
+
